@@ -1,0 +1,12 @@
+| #  | Link | Category | One-line summary | Relevance to Dockyter |
+|----|------|----------|------------------|------------------------|
+| 1  | https://discourse.jupyter.org/t/launch-additional-docker-containers-from-a-jupyter-notebook-instance/8008 | JupyterHub | Wants to start extra Docker containers from inside a notebook. | Very close to Dockyter’s goal of launching containers. |
+| 2  | https://discourse.jupyter.org/t/building-using-a-custom-dockerfile/4152 | Binder / BinderHub | Using custom Dockerfiles and prebuilt images with BinderHub. | Helps think about image build vs run responsibilities. |
+| 3  | https://discourse.jupyter.org/t/best-practice-to-load-cell-magic/14206 | Widgets | Discusses best practices for loading cell magic extensions. | Guides how users should enable and import %%docker. |
+| 4  | https://discourse.jupyter.org/t/how-to-restrict-user-shell-terminal-inside-jupyterlab/21086 | JupyterHub | Restrict which shell commands users can run. | Relevant for controlling what %%docker is allowed to execute. |
+| 5  | https://discourse.jupyter.org/t/using-jupyterhub-binderhub-to-launch-arbitrary-containers/704 | JupyterHub | Discusses launching arbitrary containers instead of notebooks. | Very close to Dockyter’s idea of running non-notebook containers. |
+| 6  | https://discourse.jupyter.org/t/how-do-binder-launch-links-work-or-wait-i-can-do-that-with-a-link/647 | Binder | Explains how Binder launch links are structured and processed. | Clarifies how repos and URLs map to running Docker environments. |
+| 7  | https://discourse.jupyter.org/t/jupyter-kernel-architecture-overview/21049 | Kernels | Gives an overview of the Jupyter kernel architecture and message flow. | Helps place %%docker inside the kernel execution pipeline. |
+| 8  | https://discourse.jupyter.org/t/brainstorm-binder-for-research/384 | Binder | Brainstorm on how Binder supports research workflows and reproducibility. | Provides Binder use cases relevant to Dockyter scenarios. |
+| 9  | https://discourse.jupyter.org/t/secure-notebook-is-it-possible-to-disable-shell-and-magic-commands/30793 | Notebook | How to disable `!` shell escapes and magic commands for stricter security. | Shows risks of powerful magics like &&docker
+| 10 | https://discourse.jupyter.org/t/better-security-isolation-mechanisms-for-untrusted-users/4245 | JupyterHub / Security | Discusses stronger isolation mechanisms for untrusted JupyterHub users. | Helps define Dockyter’s threat model when notebooks can start containers. |
