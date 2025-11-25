@@ -6,7 +6,7 @@ This document summarizes an initial design for Dockyter: an IPython/Jupyter exte
 
 ---
 
-## 4.1 Use cases
+## Use cases
 
 - **Run CLI tools packaged only as Docker images**  
   Users can keep the Python kernel light and offload heavy tools to separate images.
@@ -19,7 +19,7 @@ This document summarizes an initial design for Dockyter: an IPython/Jupyter exte
 
 ---
 
-## 4.2 User-facing syntax
+## User-facing syntax
 
 Proposed minimal interface:
 
@@ -46,7 +46,7 @@ Basic rules:
 
 ---
 
-## 4.3 Architecture options
+## Architecture options
 
 ### A. IPython extension (starting point)
 
@@ -71,7 +71,7 @@ Basic rules:
 
 ---
 
-## 4.4 Docker interaction
+## Docker interaction
 
 Two main options:
 
@@ -89,7 +89,7 @@ For the first iteration of Dockyter, using the Docker CLI is likely enough.
 
 ---
 
-## 4.5 Open questions
+## Open questions
 
 Some design questions to keep track of:
 
@@ -111,3 +111,8 @@ Some design questions to keep track of:
 
   * How to make Dockyter play nicely with kernel architecture and message flow ?
   * How to expose or hide Dockyter in different Binder/JupyterHub profiles?
+
+## Discourse topic
+
+Design discussion about Dockyter on the Jupyter Community Forum:  
+<https://discourse.jupyter.org/t/design-advice-for-a-docker-magic-to-run-commands-in-containers/38152>
