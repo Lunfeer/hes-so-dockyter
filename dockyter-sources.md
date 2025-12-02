@@ -27,3 +27,6 @@ This document lists the main external resources consulted while implementing `do
 
 8. ChatGPT - **Question about shell reroute for "!" commands**
    https://chatgpt.com/share/69275355-5748-8008-8102-c2e34857ef96
+
+9. Unix Stack Exchange – **Hybrid code in shell scripts,sharing variables** 
+   https://unix.stackexchange.com/questions/74244/hybrid-code-in-shell-scripts-sharing-variables
