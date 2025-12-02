@@ -1,154 +1,52 @@
-# Dockyter – Onboarding & First-Day Tasks
+# Dockyter
 
-Semester Project: **Dockyter – Jupyter magics to run Docker containers**
+Dockyter is an IPython extension that adds a `%%docker` magic and optional `!` redirection so that you can run CLI tools packaged as Docker images from inside notebooks, while keeping the base Python environment light.
 
----
+## Installation
 
-## 0. Big-picture goal (for you)
+```bash
+pip install dockyter
+```
 
-By the end of today, you should:
-
-1. Have a rough mental model of how Jupyter, kernels, magics, and Docker fit together.  
-2. Know what the community has already tried or discussed.  
-3. Have a **first design sketch** for a `%%docker` magic that could live as a reusable extension (not only inside `ipykernel`).  
-
-Deliverables for today are in section 5.
-
----
-
-## 1. Environment & repo setup
-
-1. Make sure you have:
-   - A recent Python (3.10+ recommended).
-   - Docker installed and working (`docker run hello-world`).
-2. [Fork the IPykernel project](https://github.com/ipython/ipykernel/fork)
-3. Clone your fork of the `ipykernel` repo and install it in editable mode in a fresh virtual environment:
-   ```bash
-   git clone https://github.com/<your-gh-user>/ipykernel.git
-   cd ipykernel
-   pip install -e ".[test]"
-   ```
-4. Verify you can start a notebook using this local kernel and run a simple cell.
-
----
-
-## 2. Jupyter Community Forum research (Discourse)
-
-1. [Fork this project](https://github.com/oesteban/hes-so-dockyter/fork)
-2. Head to [the Jupyter Community forum](https://discourse.jupyter.org/) and research **at least 10 discussions** on Docker, Binder, kernels, magics, or security relevant to this project.
-3. In your fork of this project, create a branch called "preliminary-research" and switch to it.
-4. Create a file called `discourse-topics.md` at the top of the repo. Add all the relevant topics from the forum, as a table like this:
-   ```markdown
-   | # | Link | Category | One-line summary | Relevance to Dockyter |
-   ```
-
----
-
-## 3. Investigate how magics actually work
-
-1. Explore built‑in magics:  
-   ```python
-   %lsmagic
-   %magic
-   ```
-2. Inspect magics like `%matplotlib`, `%%bash`, `%%timeit`.
-3. Implement a small custom magic using an IPython extension:
+Then in a notebook:
 
 ```python
-# mymagics.py
-from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic)
-
-@magics_class
-class MyMagics(Magics):
-    @line_magic
-    def hello(self, line):
-        print(f"Hello: {line}")
-
-    @cell_magic
-    def echo(self, line, cell):
-        print(f"Line: {line}")
-        print(cell)
-
-def load_ipython_extension(ip):
-    ip.register_magics(MyMagics)
+%load_ext dockyter
 ```
 
-This will be the base for the future `%%docker` magic.
+## Basic usage
 
----
-
-## 4. Draft the first design for Dockyter
-
-Create: `dockyter-design-sketch.md`
-
-Include:
-
-### 4.1. Use cases  
-Examples:
-- running CLI tools packaged only as Docker images  
-- keeping notebook environments lightweight  
-- Binder/JupyterHub compute workflows  
-
-### 4.2. User-facing syntax  
-Example:
-
-```
-%%docker -v /home/jovyan/data:/input image:latest
-!tool --input /input/file.txt
+```python
+%%docker myorg/tool:latest
+echo "Hello from inside the container"
 ```
 
-Define how arguments, images, mounts, env vars and cell behavior work.
+Configure Docker mode for `!`:
 
-### 4.3. Architecture options  
-Compare:
-- IPython extension (recommended starting point)  
-- inclusion in ipykernel  
-- separate kernel  
+```python
+%%docker -v /host/path:/data myorg/tool:latest
+# (empty cell)
+```
 
-List pros/cons, security implications, deployment considerations.
+Then:
 
-### 4.4. Docker interaction questions  
-Decide between:
-- calling Docker CLI  
-- using Docker Engine API  
+```python
+!tool --input /data/file.txt
+```
 
-Consider log streaming, error handling, sandboxing.
+## Commands
 
-### 4.5. Open questions  
-Make a list (e.g., Binder behavior, disabled Docker environments, mixing Python and shell code).
+* `%%docker [DOCKER ARGS...] IMAGE[:TAG]`
+* `%docker_off`
+* `%docker_status`
 
----
+## When Docker is not available
 
-## 5. Post a project question on Discourse
+If the `docker` CLI is not found on `PATH`, Dockyter prints a clear error message and does not crash the kernel.
 
-Draft and publish a topic describing Dockyter and asking for design guidance. Include:
+## Examples
 
-- project context  
-- example of intended `%%docker` usage:
-   ```
-   %%docker -v /home/jovyan/data:/input image:latest
-   !tool --input /input/file.txt
-   ```
-- architectural questions  
-- security considerations
-
-Save the URL of your post in your notes.
-
----
-
-## 6. Optional follow‑up explorations
-
-Scan related tools:
-- repo2docker  
-- Jupyter Docker Stacks  
-- dockerspawner  
-- any prior Docker magic attempts  
-
----
-
-## 7. End-of-day checklist
-
-- [ ] 10+ Discourse topics researched  
-- [ ] Discourse post published  
-- [ ] `dockyter-design-sketch.md` created  
-- [ ] Minimal custom IPython magic implemented  
+* `examples/01_local_cli.ipynb` – Run simple commands in a local Docker image.
+* `examples/02_ml_tool_in_docker.ipynb` – Use a Dockerised ML or data-validation CLI.
+* `examples/03_binder_like_environment.ipynb` – Show graceful behaviour when Docker is not available (e.g. typical Binder).
+* `examples/04_databricks_connect_local.ipynb` – Local Jupyter + Databricks Connect, with sidecar tools in Docker.
